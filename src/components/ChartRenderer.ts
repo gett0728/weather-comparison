@@ -25,17 +25,24 @@ export class ChartRenderer {
 
     this.container.innerHTML = `
       <div class="chart-grid">
-        <div class="chart-item"><h3>🌡️ 平均気温</h3><canvas id="chart-temp"></canvas></div>
-        <div class="chart-item"><h3>☀️ 日照時間</h3><canvas id="chart-sun"></canvas></div>
-        <div class="chart-item"><h3>💧 湿度</h3><canvas id="chart-humid"></canvas></div>
-        <div class="chart-item"><h3>🌧️ 降水量</h3><canvas id="chart-rain"></canvas></div>
-        <div class="chart-item"><h3>💨 風速</h3><canvas id="chart-wind"></canvas></div>
+        <div class="chart-item"><h3>平均気温</h3><canvas id="chart-temp"></canvas></div>
+        <div class="chart-item"><h3>日照時間</h3><canvas id="chart-sun"></canvas></div>
+        <div class="chart-item"><h3>湿度</h3><canvas id="chart-humid"></canvas></div>
+        <div class="chart-item"><h3>降水量</h3><canvas id="chart-rain"></canvas></div>
+        <div class="chart-item"><h3>風速</h3><canvas id="chart-wind"></canvas></div>
       </div>
     `;
 
     this.charts.push(this.line("chart-temp", monthLabels, dataList, s => s.avgTemp, "気温 (℃)"));
     this.charts.push(this.bar("chart-sun", monthLabels, dataList, s => s.totalSunshine, "日照 (h)"));
-    this.charts.push(this.line("chart-humid", monthLabels, dataList, s => s.avgHumidity, "湿度 (%)", 0, 100));
+    // 湿度データが全都市で取得不可（Archive API 使用時）ならチャートをスキップ
+    const hasHumidity = dataList.some(d => d.monthlyStats.some(s => !isNaN(s.avgHumidity)));
+    if (hasHumidity) {
+      this.charts.push(this.line("chart-humid", monthLabels, dataList, s => s.avgHumidity, "湿度 (%)", 0, 100));
+    } else {
+      const humidEl = document.getElementById("chart-humid")?.parentElement;
+      if (humidEl) humidEl.innerHTML = "<h3>💧 湿度</h3><p class='no-data'>Archive API では湿度データを取得できません</p>";
+    }
     this.charts.push(this.bar("chart-rain", monthLabels, dataList, s => s.totalPrecipitation, "降水量 (mm)"));
     this.charts.push(this.line("chart-wind", monthLabels, dataList, s => s.avgWindSpeed, "風速 (m/s)"));
   }

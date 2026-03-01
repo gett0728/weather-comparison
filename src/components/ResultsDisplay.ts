@@ -15,7 +15,7 @@ export class ResultsDisplay {
 
   private init() {
     this.container.innerHTML = `
-      <h2>📈 比較結果</h2>
+      <h2>比較結果</h2>
       <div id="results-charts"></div>
       <div id="results-table"></div>
     `;
@@ -31,7 +31,6 @@ export class ResultsDisplay {
     this.renderTable(dataList);
 
     this.container.style.display = "block";
-    this.container.scrollIntoView({ behavior: "smooth" });
   }
 
   public hide() {
@@ -43,7 +42,7 @@ export class ResultsDisplay {
     if (!tableEl) return;
 
     tableEl.innerHTML = `
-      <h3>📋 月別詳細データ</h3>
+      <h3>月別詳細データ</h3>
       <div class="table-scroll">
         <table class="data-table">
           <thead>
@@ -57,8 +56,8 @@ export class ResultsDisplay {
               <th>降水量<br>(mm)</th>
               <th>湿度<br>(%)</th>
               <th>風速<br>(m/s)</th>
-              <th>晴</th>
-              <th>曇</th>
+              <th>晴れ</th>
+              <th>くもり</th>
               <th>雨</th>
             </tr>
           </thead>
@@ -73,7 +72,7 @@ export class ResultsDisplay {
                   <td>${s.minTemp}</td>
                   <td>${s.totalSunshine}</td>
                   <td>${s.totalPrecipitation}</td>
-                  <td>${s.avgHumidity}</td>
+                  <td>${isNaN(s.avgHumidity) ? "-" : s.avgHumidity}</td>
                   <td>${s.avgWindSpeed}</td>
                   <td>${s.sunnyDays}日</td>
                   <td>${s.cloudyDays}日</td>

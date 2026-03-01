@@ -31,12 +31,10 @@ export class PeriodSelector {
     this.container.innerHTML = `
       <div class="period-controls">
         <label>
-          開始:
           <select id="period-start">${startOptions}</select>
         </label>
         <span class="period-separator">〜</span>
         <label>
-          終了:
           <select id="period-end">${endOptions}</select>
         </label>
       </div>

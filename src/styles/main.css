@@ -61,6 +61,22 @@ body {
   color: #4a90e2;
 }
 
+.reset-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  background: #fff;
+  border: 1px solid #dce3e8;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.reset-btn:hover {
+  color: #4a90e2;
+  border-color: #4a90e2;
+  background: #eef4fc;
+}
+
 .city-grid {
   max-height: 360px;
   overflow-y: auto;

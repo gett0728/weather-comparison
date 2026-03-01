@@ -41,10 +41,13 @@ export function isValidPeriod(period: Period): boolean {
 export function generateYearMonthOptions(): { year: number; month: number; label: string }[] {
   const options: { year: number; month: number; label: string }[] = [];
   const now = new Date();
+  now.setDate(1);
+  now.setMonth(now.getMonth() - 1);
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth() + 1;
 
-  for (let offset = 24; offset >= 0; offset--) {
+  let offset = 240 + currentMonth - 1; // 20年分の月数 + 今月オフセット
+  for (offset; offset >= 0; offset--) {
     let y = currentYear;
     let m = currentMonth - offset;
     while (m <= 0) { m += 12; y--; }
@@ -58,14 +61,16 @@ export function generateYearMonthOptions(): { year: number; month: number; label
  */
 export function getDefaultPeriod(): Period {
   const now = new Date();
+  now.setDate(1);
+  now.setMonth(now.getMonth() - 1);
+
   const oneYearAgo = new Date(now);
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-  oneYearAgo.setMonth(oneYearAgo.getMonth() + 1);
 
   return {
     startYear: oneYearAgo.getFullYear(),
     startMonth: oneYearAgo.getMonth() + 1,
     endYear: now.getFullYear(),
-    endMonth: now.getMonth() + 1
+    endMonth: now.getMonth()
   };
 }

@@ -34,6 +34,7 @@ export class CitySelector {
             <option value="">すべて表示</option>
             ${groups.map(g => `<option value="${g.prefecture}">${g.prefecture}</option>`).join("")}
           </select>
+          <button type="button" id="city-reset-btn" class="reset-btn">リセット</button>
         </label>
         <span id="selection-count" class="selection-count">0 / ${MAX_SELECTION} 選択中</span>
       </div>
@@ -66,6 +67,16 @@ export class CitySelector {
       for (const g of groups) {
         g.style.display = (!val || g.dataset.pref === val) ? "" : "none";
       }
+    });
+
+    // リセットボタン
+    const resetBtn = this.container.querySelector("#city-reset-btn") as HTMLButtonElement;
+    resetBtn.addEventListener("click", () => {
+      this.selected.clear();
+      const checkboxes = this.container.querySelectorAll<HTMLInputElement>("input[type=checkbox]");
+      for (const cb of checkboxes) cb.checked = false;
+      this.updateCount();
+      this.notify();
     });
 
     // チェックボックス
