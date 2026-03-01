@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日本気象比較サイト</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  <script type="module" crossorigin src="./assets/index-pttDkAWi.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DqUvFzxX.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>日本気象比較サイト</h1>
+  </header>
+
+  <main class="container">
+    <section class="panel selector-panel">
+      <h2>地点を選択（最大3地点）</h2>
+      <div id="city-selector"></div>
+    </section>
+
+    <section class="panel period-panel">
+      <h2>期間を選択</h2>
+      <div id="period-selector"></div>
+    </section>
+
+    <div class="action-bar">
+      <button id="compare-btn" class="btn-primary" disabled>比較する</button>
+    </div>
+
+    <div id="loading" class="loading" style="display:none;">
+      <div class="spinner"></div>
+      <p>気象データ取得中...</p>
+    </div>
+
+    <section id="results" style="display:none;"></section>
+  </main>
+
+  <footer class="site-footer">
+    <p>気象データ提供: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
+  </footer>
+
+</body>
+</html>
