@@ -36,23 +36,22 @@ export function isValidPeriod(period: Period): boolean {
 }
 
 /**
- * 現在から過去2年間の選択肢用 年月リストを生成
+ * 現在から過去2年間の選択肢用年月リストを生成
  */
 export function generateYearMonthOptions(): { year: number; month: number; label: string }[] {
   const options: { year: number; month: number; label: string }[] = [];
   const now = new Date();
-  now.setDate(1);
-  now.setMonth(now.getMonth() - 1);
   const currentYear = now.getFullYear();
-  const currentMonth = now.getMonth() + 1;
+  const currentMonth = now.getMonth();
 
   let offset = 240 + currentMonth - 1; // 20年分の月数 + 今月オフセット
   for (offset; offset >= 0; offset--) {
-    let y = currentYear;
-    let m = currentMonth - offset;
-    while (m <= 0) { m += 12; y--; }
-    options.push({ year: y, month: m, label: `${y}年${m}月` });
+    let year = currentYear;
+    let month = currentMonth - offset;
+    while (month <= 0) { month += 12; year--; }
+    options.push({ year: year, month: month, label: `${year}年${month}月` });
   }
+
   return options;
 }
 
@@ -61,16 +60,13 @@ export function generateYearMonthOptions(): { year: number; month: number; label
  */
 export function getDefaultPeriod(): Period {
   const now = new Date();
-  now.setDate(1);
-  now.setMonth(now.getMonth() - 1);
-
-  const oneYearAgo = new Date(now);
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  const startDate = new Date(now.getFullYear() - 1, now.getMonth()); // start: 当月から1年前
+  const endDate = new Date(now.getFullYear(), now.getMonth() - 1); // end: 当月の前月
 
   return {
-    startYear: oneYearAgo.getFullYear(),
-    startMonth: oneYearAgo.getMonth() + 1,
-    endYear: now.getFullYear(),
-    endMonth: now.getMonth()
+    startYear: startDate.getFullYear(),
+    startMonth: startDate.getMonth() + 1, // getMonthは月を0-11で返すため+1
+    endYear: endDate.getFullYear(),
+    endMonth: endDate.getMonth() + 1 // getMonthは月を0-11で返すため+1
   };
 }
