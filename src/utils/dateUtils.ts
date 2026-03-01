@@ -60,8 +60,8 @@ export function generateYearMonthOptions(): { year: number; month: number; label
  */
 export function getDefaultPeriod(): Period {
   const now = new Date();
-  const startDate = new Date(now.getFullYear() - 1, now.getMonth()); // start: 当月から1年前
-  const endDate = new Date(now.getFullYear(), now.getMonth() - 1); // end: 当月の前月
+  const startDate = new Date(now.getFullYear() - 1, 0); // start: 当月から1年前
+  const endDate = new Date(now.getFullYear() - 1, 11); // end: 当月の前月
 
   return {
     startYear: startDate.getFullYear(),
