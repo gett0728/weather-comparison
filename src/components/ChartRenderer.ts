@@ -41,7 +41,7 @@ export class ChartRenderer {
       this.charts.push(this.line("chart-humid", monthLabels, dataList, s => s.avgHumidity, "湿度 (%)", 0, 100));
     } else {
       const humidEl = document.getElementById("chart-humid")?.parentElement;
-      if (humidEl) humidEl.innerHTML = "<h3>💧 湿度</h3><p class='no-data'>Archive API では湿度データを取得できません</p>";
+      if (humidEl) humidEl.innerHTML = "<h3>湿度</h3><p class='no-data'>Archive API では湿度データを取得できません</p>";
     }
     this.charts.push(this.bar("chart-rain", monthLabels, dataList, s => s.totalPrecipitation, "降水量 (mm)"));
     this.charts.push(this.line("chart-wind", monthLabels, dataList, s => s.avgWindSpeed, "風速 (m/s)"));
